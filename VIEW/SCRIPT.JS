@@ -277,16 +277,27 @@ const guardarPedido = async (e) => {
         }
 
         const pedido = {
+            id: 0,
             usuarioId: usuarioId,
-            productos: productosSeleccionados.map(id => ({ id }))
+            usuario: {
+                id: usuarioId,
+                nombre: "",  
+                email: "string"  
+            },
+            productos: productosSeleccionados.map(id => ({
+                id: id,
+                nombre: "string",  
+                precio: 0  
+            }))
         };
+        
 
         await fetchData('Pedidos', 'POST', pedido);
         mostrarMensaje('Pedido creado con éxito');
         pedidoForm.reset();
         await cargarPedidos();
     } catch (error) {
-        console.error('Error al guardar pedido:', error);
+        console.error(`Error al guardar pedido: ${error.message}`, 'error');
         mostrarMensaje(`Error al guardar pedido: ${error.message}`, 'error');
     }
 };

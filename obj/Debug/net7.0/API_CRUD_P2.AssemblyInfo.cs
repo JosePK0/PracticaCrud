@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("API_CRUD_P2")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5fc7ee4fee2333d653f8ae220b0c3b3cd95b8fc2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b40dfcff51139caf20f68e2d9e486e79ead98b57")]
 [assembly: System.Reflection.AssemblyProductAttribute("API_CRUD_P2")]
 [assembly: System.Reflection.AssemblyTitleAttribute("API_CRUD_P2")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
