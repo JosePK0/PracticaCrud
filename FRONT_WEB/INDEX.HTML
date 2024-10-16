@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API CRUD P2 WEB</title>
+    <link rel="stylesheet" href="STYLES.CSS">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>API CRUD P2 WEB</h1>
+        <nav>
+            <button id="usuariosBtn" class="nav-btn active">Usuarios</button>
+            <button id="productosBtn" class="nav-btn">Productos</button>
+            <button id="pedidosBtn" class="nav-btn">Pedidos</button>
+        </nav>
+    </header>
+
+    <main>
+        <section id="usuarios" class="seccion">
+            <h2>Gestión de Usuarios</h2>
+            <form id="usuarioForm" class="crud-form">
+                <input type="hidden" id="usuarioId">
+                <input type="text" id="usuarioNombre" placeholder="Nombre" required>
+                <input type="email" id="usuarioEmail" placeholder="Email" required>
+                <button type="submit" class="btn btn-primary">Guardar Usuario</button>
+            </form>
+            <div id="usuariosList" class="list-container"></div>
+        </section>
+
+        <section id="productos" class="seccion" style="display:none;">
+            <h2>Gestión de Productos</h2>
+            <form id="productoForm" class="crud-form">
+                <input type="hidden" id="productoId">
+                <input type="text" id="productoNombre" placeholder="Nombre" required>
+                <input type="number" id="productoPrecio" placeholder="Precio" step="0.01" required>
+                <button type="submit" class="btn btn-primary">Guardar Producto</button>
+            </form>
+            <div id="productosList" class="list-container"></div>
+        </section>
+
+        <section id="pedidos" class="seccion" style="display:none;">
+            <h2>Gestión de Pedidos</h2>
+            <form id="pedidoForm" class="crud-form">
+                <input type="hidden" id="pedidoId">
+                <select id="pedidoUsuario" required>
+                    <option value="">Seleccione un usuario</option>
+                </select>
+                <div id="productosSeleccion"></div>
+                <button type="submit" class="btn btn-primary">Guardar Pedido</button>
+            </form>
+            <div id="pedidosList" class="list-container"></div>
+        </section>
+    </main>
+
+    <div id="mensajeContainer" class="mensaje-container"></div>
+
+    <script src="SCRIPT.JS"></script>
+</body>
+</html>

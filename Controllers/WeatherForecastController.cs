@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace PracticaCrud.Controllers;
+namespace API_CRUD_P2.Controllers;
 
 [ApiController]
 [Route("[controller]")]

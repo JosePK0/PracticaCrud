@@ -1,4 +1,4 @@
-namespace PracticaCrud;
+namespace API_CRUD_P2;
 
 public class WeatherForecast
 {

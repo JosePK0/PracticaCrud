@@ -1,36 +1,34 @@
 using Microsoft.EntityFrameworkCore;
-using PracticaCrud.Data;
-using PracticaCrud.Models;
+using API_CRUD_P2.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add services to the container.
+
 builder.Services.AddControllers();
 
-// Configurar la conexión a la base de datos MySQL
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<PracticaContext>(options =>
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
+    new MySqlServerVersion(new Version(8, 0, 26))));
+
+
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-// Añadir servicios y controladores
 
-
-// Habilitar CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowSpecificOrigins",
-        builder => builder
-            .WithOrigins("http://127.0.0.1:5500") // Especifica el origen permitido
-            .AllowAnyHeader()
-            .AllowAnyMethod());
+    options.AddPolicy("NuevaPolitica",app=>
+    {
+        app.AllowAnyOrigin()
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+    });
 });
 
-
-
-// Agregar servicios de Swagger
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 var app = builder.Build();
+
+// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -38,15 +36,13 @@ if (app.Environment.IsDevelopment())
 }
 
 
-// Usar CORS
-app.UseCors("AllowSpecificOrigins");
+app.UseCors("NuevaPolitica");
+
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-// Habilitar middleware de Swagger
-
-// Mapear controladores
 app.MapControllers();
 
 app.Run();
