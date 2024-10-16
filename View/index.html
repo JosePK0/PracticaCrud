@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Usuarios, Productos y Pedidos</title>
+    <script src="crud.js" defer></script>
+</head>
+<body>
+    <h1>Gestión de Usuarios, Productos y Pedidos</h1>
+
+    <!-- Sección de Usuarios -->
+    <section>
+        <h2>Usuarios</h2>
+        <div>
+            <input type="text" id="usuarioNombre" placeholder="Nombre">
+            <input type="email" id="usuarioEmail" placeholder="Email">
+            <button onclick="crearUsuario()">Agregar Usuario</button>
+        </div>
+        <div>
+            <h3>Lista de Usuarios</h3>
+            <ul id="listaUsuarios"></ul>
+        </div>
+    </section>
+
+    <!-- Sección de Productos -->
+    <section>
+        <h2>Productos</h2>
+        <div>
+            <input type="text" id="productoNombre" placeholder="Nombre">
+            <input type="number" id="productoPrecio" placeholder="Precio">
+            <button onclick="crearProducto()">Agregar Producto</button>
+        </div>
+        <div>
+            <h3>Lista de Productos</h3>
+            <ul id="listaProductos"></ul>
+        </div>
+    </section>
+
+    <!-- Sección de Pedidos -->
+    <section>
+        <h2>Pedidos</h2>
+        <div>
+            <select id="pedidoUsuario">
+                <option value="">Seleccionar Usuario</option>
+            </select>
+            <select id="pedidoProductos" multiple>
+                <option value="">Seleccionar Productos</option>
+            </select>
+            <button onclick="crearPedido()">Agregar Pedido</button>
+        </div>
+        <div>
+            <h3>Lista de Pedidos</h3>
+            <ul id="listaPedidos"></ul>
+        </div>
+    </section>
+</body>
+</html>
