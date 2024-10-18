@@ -19,7 +19,7 @@ namespace practicacrud.Controllers
             _context = context;
         }
 
-        // GET: api/Pedidos
+        
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PedidoDTO>>> GetPedidos()
         {
@@ -31,7 +31,7 @@ namespace practicacrud.Controllers
 
             foreach (var pedido in pedidos)
             {
-                // Obtener los detalles de los productos
+               
                 var productos = await _context.Productos
                     .Where(prod => pedido.Productos.Contains(prod.Id))
                     .ToListAsync();
@@ -49,7 +49,6 @@ namespace practicacrud.Controllers
             return pedidosDTO;
         }
 
-        // GET: api/Pedidos/5
         [HttpGet("{id}")]
         public async Task<ActionResult<PedidoDTO>> GetPedido(int id)
         {
@@ -62,7 +61,7 @@ namespace practicacrud.Controllers
                 return NotFound();
             }
 
-            // Obtener los detalles de los productos
+           
             var productos = await _context.Productos
                 .Where(prod => pedido.Productos.Contains(prod.Id))
                 .ToListAsync();
@@ -77,18 +76,17 @@ namespace practicacrud.Controllers
             return pedidoDTO;
         }
 
-        // POST: api/Pedidos
+        
         [HttpPost]
         public async Task<ActionResult<Pedido>> PostPedido(Pedido pedido)
         {
-            // Validar que el usuario existe
+          
             var usuario = await _context.Usuarios.FindAsync(pedido.UsuarioId);
             if (usuario == null)
             {
                 return BadRequest("Usuario no encontrado");
             }
 
-            // Validar que los productos existen
             foreach (var productoId in pedido.Productos)
             {
                 if (!await _context.Productos.AnyAsync(p => p.Id == productoId))
@@ -103,7 +101,7 @@ namespace practicacrud.Controllers
             return CreatedAtAction(nameof(GetPedido), new { id = pedido.Id }, pedido);
         }
 
-        // PUT: api/Pedidos/5
+        
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPedido(int id, Pedido pedido)
         {
@@ -112,14 +110,13 @@ namespace practicacrud.Controllers
                 return BadRequest();
             }
 
-            // Validar que el usuario existe
             var usuario = await _context.Usuarios.FindAsync(pedido.UsuarioId);
             if (usuario == null)
             {
                 return BadRequest("Usuario no encontrado");
             }
 
-            // Validar que los productos existen
+            
             foreach (var productoId in pedido.Productos)
             {
                 if (!await _context.Productos.AnyAsync(p => p.Id == productoId))
@@ -148,7 +145,7 @@ namespace practicacrud.Controllers
             return NoContent();
         }
 
-        // DELETE: api/Pedidos/5
+       
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePedido(int id)
         {

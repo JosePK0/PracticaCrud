@@ -19,7 +19,7 @@ namespace practicacrud.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Configurar el conversor para la lista de productos en Pedido
+            
             modelBuilder.Entity<Pedido>()
                 .Property(p => p.Productos)
                 .HasConversion(

@@ -16,14 +16,13 @@ namespace practicacrud.Controllers
             _context = context;
         }
 
-        // GET: api/Productos
+        
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Producto>>> GetProductos()
         {
             return await _context.Productos.ToListAsync();
         }
 
-        // GET: api/Productos/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Producto>> GetProducto(int id)
         {
@@ -37,7 +36,6 @@ namespace practicacrud.Controllers
             return producto;
         }
 
-        // POST: api/Productos
         [HttpPost]
         public async Task<ActionResult<Producto>> PostProducto(Producto producto)
         {
@@ -76,7 +74,7 @@ namespace practicacrud.Controllers
             return NoContent();
         }
 
-        // DELETE: api/Productos/5
+        
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProducto(int id)
         {

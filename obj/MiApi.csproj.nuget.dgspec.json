@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Joseito\\Desktop\\PracticaCrud\\MiApi.csproj": {}
+    "C:\\Users\\j_ant\\OneDrive\\Escritorio\\4-Cuatri\\AWOAS\\CRUD\\PracticaCrud\\MiApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Joseito\\Desktop\\PracticaCrud\\MiApi.csproj": {
+    "C:\\Users\\j_ant\\OneDrive\\Escritorio\\4-Cuatri\\AWOAS\\CRUD\\PracticaCrud\\MiApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Joseito\\Desktop\\PracticaCrud\\MiApi.csproj",
+        "projectUniqueName": "C:\\Users\\j_ant\\OneDrive\\Escritorio\\4-Cuatri\\AWOAS\\CRUD\\PracticaCrud\\MiApi.csproj",
         "projectName": "MiApi",
-        "projectPath": "C:\\Users\\Joseito\\Desktop\\PracticaCrud\\MiApi.csproj",
-        "packagesPath": "C:\\Users\\Joseito\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Joseito\\Desktop\\PracticaCrud\\obj\\",
+        "projectPath": "C:\\Users\\j_ant\\OneDrive\\Escritorio\\4-Cuatri\\AWOAS\\CRUD\\PracticaCrud\\MiApi.csproj",
+        "packagesPath": "C:\\Users\\j_ant\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\j_ant\\OneDrive\\Escritorio\\4-Cuatri\\AWOAS\\CRUD\\PracticaCrud\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Joseito\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\j_ant\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,6 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -91,7 +92,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
