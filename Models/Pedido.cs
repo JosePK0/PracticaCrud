@@ -1,15 +1,23 @@
-namespace API_CRUD_P2.Models;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
-public class Pedido 
+namespace practicacrud.Models
 {
+    public class Pedido
+    {
+        [Key]
+        public int Id { get; set; }
 
-    public int Id {get;set;}
+        [Required]
+        public int UsuarioId { get; set; }
 
-    public int UsuarioId {get;set;}
+        [ForeignKey("UsuarioId")]
+        [JsonIgnore]
+        public Usuario? Usuario { get; set; }
 
-    public Usuario Usuario {get;set;}
-
-    public List<Producto> Productos {get;set;}
-
-
+        [Required]
+        public List<int> Productos { get; set; }
+    }
 }

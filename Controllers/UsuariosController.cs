@@ -1,18 +1,17 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using API_CRUD_P2.Data;
-using API_CRUD_P2.Models;
+using practicacrud.Data;
+using practicacrud.Models;
 
-
-namespace API_CRUD_P2.Controllers
+namespace practicacrud.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class UsuariosController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly ApiDbContext _context;
 
-        public UsuariosController(AppDbContext context)
+        public UsuariosController(ApiDbContext context)
         {
             _context = context;
         }
@@ -74,7 +73,6 @@ namespace API_CRUD_P2.Controllers
                     throw;
                 }
             }
-
             return NoContent();
         }
 

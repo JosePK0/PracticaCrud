@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\buildMultiTargeting\API_CRUD_P2.props" />
-</Project>

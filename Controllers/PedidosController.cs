@@ -1,35 +1,60 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using API_CRUD_P2.Data;
-using API_CRUD_P2.Models;
+using practicacrud.Data;
+using practicacrud.Models;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace API_CRUD_P2.Controllers
+namespace practicacrud.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class PedidosController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly ApiDbContext _context;
 
-        public PedidosController(AppDbContext context)
+        public PedidosController(ApiDbContext context)
         {
             _context = context;
         }
 
-        
+        // GET: api/Pedidos
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Pedido>>> GetPedidos()
+        public async Task<ActionResult<IEnumerable<PedidoDTO>>> GetPedidos()
         {
-            return await _context.Pedidos.Include(p => p.Usuario).Include(p => p.Productos).ToListAsync();
+            var pedidos = await _context.Pedidos
+                .Include(p => p.Usuario)
+                .ToListAsync();
+
+            var pedidosDTO = new List<PedidoDTO>();
+
+            foreach (var pedido in pedidos)
+            {
+                // Obtener los detalles de los productos
+                var productos = await _context.Productos
+                    .Where(prod => pedido.Productos.Contains(prod.Id))
+                    .ToListAsync();
+
+                var pedidoDTO = new PedidoDTO
+                {
+                    Id = pedido.Id,
+                    Usuario = pedido.Usuario,
+                    Productos = productos
+                };
+
+                pedidosDTO.Add(pedidoDTO);
+            }
+
+            return pedidosDTO;
         }
 
-        
+        // GET: api/Pedidos/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Pedido>> GetPedido(int id)
+        public async Task<ActionResult<PedidoDTO>> GetPedido(int id)
         {
             var pedido = await _context.Pedidos
                 .Include(p => p.Usuario)
-                .Include(p => p.Productos)
                 .FirstOrDefaultAsync(p => p.Id == id);
 
             if (pedido == null)
@@ -37,26 +62,40 @@ namespace API_CRUD_P2.Controllers
                 return NotFound();
             }
 
-            return pedido;
+            // Obtener los detalles de los productos
+            var productos = await _context.Productos
+                .Where(prod => pedido.Productos.Contains(prod.Id))
+                .ToListAsync();
+
+            var pedidoDTO = new PedidoDTO
+            {
+                Id = pedido.Id,
+                Usuario = pedido.Usuario,
+                Productos = productos
+            };
+
+            return pedidoDTO;
         }
 
-        
+        // POST: api/Pedidos
         [HttpPost]
         public async Task<ActionResult<Pedido>> PostPedido(Pedido pedido)
         {
+            // Validar que el usuario existe
             var usuario = await _context.Usuarios.FindAsync(pedido.UsuarioId);
             if (usuario == null)
             {
                 return BadRequest("Usuario no encontrado");
             }
 
-            pedido.Usuario = usuario;
-
-            var productos = await _context.Productos
-                .Where(p => pedido.Productos.Select(pp => pp.Id).Contains(p.Id))
-                .ToListAsync();
-
-            pedido.Productos = productos;
+            // Validar que los productos existen
+            foreach (var productoId in pedido.Productos)
+            {
+                if (!await _context.Productos.AnyAsync(p => p.Id == productoId))
+                {
+                    return BadRequest($"Producto con Id {productoId} no encontrado");
+                }
+            }
 
             _context.Pedidos.Add(pedido);
             await _context.SaveChangesAsync();
@@ -64,7 +103,7 @@ namespace API_CRUD_P2.Controllers
             return CreatedAtAction(nameof(GetPedido), new { id = pedido.Id }, pedido);
         }
 
-        
+        // PUT: api/Pedidos/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPedido(int id, Pedido pedido)
         {
@@ -73,26 +112,23 @@ namespace API_CRUD_P2.Controllers
                 return BadRequest();
             }
 
-            var pedidoExistente = await _context.Pedidos
-                .Include(p => p.Productos)
-                .FirstOrDefaultAsync(p => p.Id == id);
-
-            if (pedidoExistente == null)
+            // Validar que el usuario existe
+            var usuario = await _context.Usuarios.FindAsync(pedido.UsuarioId);
+            if (usuario == null)
             {
-                return NotFound();
+                return BadRequest("Usuario no encontrado");
             }
 
-            pedidoExistente.UsuarioId = pedido.UsuarioId;
-
-            var productos = await _context.Productos
-                .Where(p => pedido.Productos.Select(pp => pp.Id).Contains(p.Id))
-                .ToListAsync();
-
-            pedidoExistente.Productos.Clear();
-            foreach (var producto in productos)
+            // Validar que los productos existen
+            foreach (var productoId in pedido.Productos)
             {
-                pedidoExistente.Productos.Add(producto);
+                if (!await _context.Productos.AnyAsync(p => p.Id == productoId))
+                {
+                    return BadRequest($"Producto con Id {productoId} no encontrado");
+                }
             }
+
+            _context.Entry(pedido).State = EntityState.Modified;
 
             try
             {
@@ -109,11 +145,10 @@ namespace API_CRUD_P2.Controllers
                     throw;
                 }
             }
-
             return NoContent();
         }
 
-        
+        // DELETE: api/Pedidos/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePedido(int id)
         {

@@ -1,45 +1,41 @@
 using Microsoft.EntityFrameworkCore;
-using API_CRUD_P2.Data;
+using practicacrud.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 
-builder.Services.AddControllers();
-
-builder.Services.AddDbContext<AppDbContext>(options =>
+builder.Services.AddDbContext<ApiDbContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
-    new MySqlServerVersion(new Version(8, 0, 26))));
+    new MySqlServerVersion(new Version(8, 0, 31))));
 
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// Agregar controladores y Swagger
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-builder.Services.AddCors(options =>
+builder.Services.AddSwaggerGen(options =>
 {
-    options.AddPolicy("NuevaPolitica",app=>
+    options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
     {
-        app.AllowAnyOrigin()
-        .AllowAnyHeader()
-        .AllowAnyMethod();
+        Title = "practicacrud", 
+        Version = "v1.0", 
+        Description = "Descripción de tu API", 
     });
+});
+
+
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+    options.JsonSerializerOptions.WriteIndented = true;
 });
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configurar Swagger
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>{});
 }
-
-
-app.UseCors("NuevaPolitica");
-
-
-app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
